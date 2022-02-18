@@ -17,6 +17,7 @@ package com.example.lemonade
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
@@ -102,6 +103,9 @@ class MainActivity : AppCompatActivity() {
             "squeeze" -> {
                 squeezeCount++
                 lemonSize--
+                if (lemonSize >= 1) {
+                    lemonImage!!.doAnimation()
+                }
                 if (lemonSize < 1) {
                     lemonSize = -1
                     lemonadeState = "drink"
@@ -117,6 +121,14 @@ class MainActivity : AppCompatActivity() {
                 setViewElements()
             }
         }
+    }
+
+    private fun View.doAnimation() {
+        animate().scaleX(0.8f).scaleY(0.8f).withEndAction {
+            animate().rotationBy(360f).withEndAction {
+                animate().scaleX(1f).scaleY(1f).start()
+            }.start()
+        }.start()
     }
 
     /**
